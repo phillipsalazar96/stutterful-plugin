@@ -36,65 +36,17 @@ ob_start();
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-/*
-function register_session(){
-    if( !session_id() )
-	{
-        session_start();
-	}
-	
-	
-}
-add_action('init','register_session',1);
-*/
-
-/**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-//define( 'PLUGIN_NAME_VERSION', '1.0.0' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-plugin-name-activator.php
- */
-/*
-function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-activator.php';
-	Plugin_Name_Activator::activate();
-}
-*/
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-plugin-name-deactivator.php
- */
-/*
-function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
-}
-*/
-/*
-function orderlivery_css() {
-
-}
-add_action('init','orderlivery_css');
 
 
-function orderlivery_js()
-{
-
-}
-add_action('init', 'orderlivery_js');
-
-*/
-
+add_action( 'admin_menu', 'stutter_admin', 13 );
 
 
 function stutterful_list()
 {
-echo "asdas";
+	require plugin_dir_path( __FILE__ ) . '/models/wordlist.model.php';
+	require plugin_dir_path( __FILE__ ) . '/controllers/wordlist.controller.php';
+	Wordlist::index();
+	
 }
 
 
@@ -102,21 +54,10 @@ function stutter_admin()
 {
 	
         //$icon_url =  plugin_dir_url(dirname(__FILE__)). PLUGIN_NAME ."/public/img/ord-3-32x32.png";
-        add_menu_page('Word List', 'Word list', 'manage_options', 'stutterful', 'stutterful_list', 'settings');
+        add_menu_page('Word List', 'Word list', 'manage_options', 'stutterful', 'stutterful_list', 'settings', );
 
 
 }
-
-add_action( 'admin_menu', 'stutter_admin' );
-
-//add_action('edit_location');
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-//require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
-
 
 
 
