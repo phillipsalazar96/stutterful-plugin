@@ -59,7 +59,23 @@ function stutter_admin()
 
 }
 
+function st_assets_scripts()
+{
+	//wp_enqueue_script( 'st_vue', plugin_dir_path( __FILE__ ) . 'assets/js/vue.js');
+	wp_enqueue_script( 'st_annyang', plugin_dir_url( __FILE__ ) . 'assets/js/annyang.min.js');
+	wp_enqueue_script( 'st_backend', plugin_dir_url( __FILE__ ) . 'assets/js/wpbackend.js');
 
+
+}
+add_action('admin_enqueue_scripts', 'st_assets_scripts');
+
+function st_assets_styles()
+{
+	wp_enqueue_style( 'st_admin_style', plugin_dir_url( __FILE__ ) . '/assets/css/st_admin.css');
+	//wp_enqueue_style('st_admin_style', plugins_url( 'assets/css/st_admin.css', __FILE__ ),array(),'all');
+
+}
+add_action('admin_enqueue_styles','st_assets_styles');
 
 // Shortcode as a menu.
 function stutterful_tools()
@@ -119,7 +135,7 @@ function stutter_add_my_custom_page() {
 		riddle_type VARCHAR(255) NULL,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		updated_at TIMESTAMP NULL,
-		PRIMARY KEY (word_id)
+		PRIMARY KEY (riddle_id)
 		) $charset_collate;";
 
 		$create = $wpdb->query($sql);
@@ -181,17 +197,37 @@ register_deactivation_hook( __FILE__, 'stutter_remove_pages' );
 
 register_uninstall_hook( __FILE__, 'stutter_uninstall' );
 
-/*
-function thus() {
-	//wp_enqueue_script('wp-deactivation-message', plugins_url('public/js/message.js', dirname(__FILE__)), array());
-
-}
-*/
 // takes away power by wordpress and version.
 add_filter( 'admin_footer_text', '__return_empty_string', 11 ); 
 add_filter( 'update_footer', '__return_empty_string', 11 );
 
 //add_action('wp-deactivation-message','thus');
+
+
+//shortcode. 
+function shortcode_lessons_words( $atts )
+{
+
+
+	return "words";
+}
+add_shortcode( 'st_lessons_words', 'shortcode_lessons_words' );
+
+function shortcode_lessons_phrases( $atts )
+{
+
+
+	return "phrases";
+}
+add_shortcode( 'st_lessons_phrases', 'shortcode_lessons_phrases' );
+
+function shortcode_lessons_riddles( $atts )
+{
+
+
+	return "riddles";
+}
+add_shortcode( 'st_lessons_riddles', 'shortcode_lessons_riddles' );
 
 /**
  * Begins execution of the plugin.
